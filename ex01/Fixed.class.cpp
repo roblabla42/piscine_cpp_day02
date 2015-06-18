@@ -6,12 +6,13 @@
 /*   By: roblabla </var/spool/mail/roblabla>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 16:58:14 by roblabla          #+#    #+#             */
-/*   Updated: 2015/06/12 21:02:51 by roblabla         ###   ########.fr       */
+/*   Updated: 2015/06/18 18:57:07 by roblabla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.class.hpp"
 #include <iostream>
+#include <cmath>
 
 Fixed::Fixed() : val(0), fractionalBits(8)
 {
@@ -32,8 +33,7 @@ Fixed::Fixed(int const i) : val(i << 8), fractionalBits(8)
 Fixed::Fixed(float const i) : fractionalBits(8)
 {
 	std::cout << "Float constructor called" << std::endl;
-	val = static_cast<int>(i * (1 << fractionalBits));
-	//val = (static_cast<int>(i) << 8) | (static_cast<>() & 0xFF);
+	val = (int)(roundf(i * (1 << fractionalBits)));
 }
 
 Fixed::~Fixed()
@@ -45,6 +45,7 @@ Fixed	&Fixed::operator=(Fixed const &rhs)
 {
 	std::cout << "Assignation operator called" << std::endl;
 	this->val = rhs.val;
+	return (*this);
 }
 
 int		Fixed::getRawBits() const
@@ -60,7 +61,7 @@ void	Fixed::setRawBits(int const raw)
 
 float	Fixed::toFloat() const
 {
-	return static_cast<float>(val) / (1 << fractionalBits);
+	return (float)(val) / (1 << fractionalBits);
 }
 int		Fixed::toInt() const
 {
@@ -70,4 +71,5 @@ int		Fixed::toInt() const
 std::ostream &	operator<<(std::ostream &o, Fixed const &i)
 {
 	o << i.toFloat();
+	return (o);
 }
