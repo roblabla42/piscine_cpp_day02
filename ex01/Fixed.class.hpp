@@ -6,7 +6,7 @@
 /*   By: roblabla </var/spool/mail/roblabla>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 16:49:32 by roblabla          #+#    #+#             */
-/*   Updated: 2015/06/12 17:14:21 by roblabla         ###   ########.fr       */
+/*   Updated: 2015/06/18 20:54:42 by roblabla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class Fixed
 {
 
 	int			val;
-	const int	fractionalBits;
+	static const int	fractionalBits;
 public:
 	Fixed();
 	Fixed(Fixed const & src);

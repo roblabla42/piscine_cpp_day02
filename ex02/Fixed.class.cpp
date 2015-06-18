@@ -6,29 +6,30 @@
 /*   By: roblabla </var/spool/mail/roblabla>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 16:58:14 by roblabla          #+#    #+#             */
-/*   Updated: 2015/06/14 20:51:42 by roblabla         ###   ########.fr       */
+/*   Updated: 2015/06/18 20:57:30 by roblabla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.class.hpp"
 #include <iostream>
+#include <cmath>
 
-Fixed::Fixed() : val(0), fractionalBits(8)
+Fixed::Fixed() : val(0)
 {
 }
 
-Fixed::Fixed(Fixed const & src) : val(src.val), fractionalBits(src.fractionalBits)
+Fixed::Fixed(Fixed const & src) : val(src.val)
 {
 }
 
-Fixed::Fixed(int const i) : val(i << 8), fractionalBits(8)
+Fixed::Fixed(int const i)
 {
 	val = i << fractionalBits;
 }
 
-Fixed::Fixed(float const i) : fractionalBits(8)
+Fixed::Fixed(float const i)
 {
-	val = static_cast<int>(i * (1 << fractionalBits));
+	val = (int)(roundf(i * (1 << fractionalBits)));
 }
 
 Fixed::~Fixed()
@@ -38,6 +39,7 @@ Fixed::~Fixed()
 Fixed	&Fixed::operator=(Fixed const &rhs)
 {
 	this->val = rhs.val;
+	return (*this);
 }
 
 int		Fixed::getRawBits() const
@@ -193,4 +195,7 @@ Fixed	const&Fixed::max(Fixed const&lhs, Fixed const&rhs)
 std::ostream &	operator<<(std::ostream &o, Fixed const &i)
 {
 	o << i.toFloat();
+	return (o);
 }
+
+const int Fixed::fractionalBits = 8;
